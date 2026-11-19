@@ -32,6 +32,11 @@ const itemSchema = new mongoose.Schema({
   disc: { type: Number, default: 0 },
 }, { _id: false });
 
+const salespersonSchema = new mongoose.Schema({
+  name: { type: String, default: '' },
+  contact: { type: String, default: '' },
+}, { _id: false });
+
 const invoiceSchema = new mongoose.Schema({
   seller: { type: partySchema, default: () => ({}) },
   buyer: { type: partySchema, default: () => ({}) },
@@ -41,6 +46,7 @@ const invoiceSchema = new mongoose.Schema({
   items: { type: [itemSchema], default: [] },
   gstRate: { type: Number, default: 18 },
   declaration: { type: String, default: '' },
+  salesperson: { type: salespersonSchema, default: () => ({}) },
   totals: { type: mongoose.Schema.Types.Mixed, default: {} },
 }, { timestamps: true });
 
