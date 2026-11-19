@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const invoiceRoutes = require('./routes/invoiceRoutes');
 const proformaRoutes = require('./routes/proformaInvoiceRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const productRoutes = require('./routes/productRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/proforma-invoices', proformaRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/products', productRoutes);
 
 app.get('/', (req, res) => {
   res.send({ status: 'ok', message: 'Invoice API is running' });
