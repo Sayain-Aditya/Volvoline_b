@@ -31,3 +31,16 @@ exports.deleteProduct = async (req, res, next) => {
     res.json({ message: 'Deleted' });
   } catch (e) { next(e); }
 };
+
+exports.bulkImport = async (req, res, next) => {
+  try {
+    const rows = req.body;
+    if (!Array.isArray(rows) || rows.length === 0)
+      return res.status(400).json({ message: 'No rows provided' });
+    const docs = rows
+      .filter((r) => r.name && String(r.name).trim())
+      .map((r) => ({ name: String(r.name).trim(), hsn: String(r.hsn || '').trim(), unit: 'NOS', rate: 0, desc: '' }));
+    const result = await Product.insertMany(docs, { ordered: false });
+    res.status(201).json({ inserted: result.length });
+  } catch (e) { next(e); }
+};
